@@ -16,9 +16,24 @@ RSpec.describe WheelOfFortune, :type => :model do
     @game = WheelOfFortune.new({theme: theme, phrase: phrase})
   end
 
-  describe "#new" do
+  describe "#initialize" do
     it "accepts a single argument in the form of a hash" do
       expect { @game }.not_to raise_error #lazy eval initalizes game here
+    end
+    it "accesses the hash for keys :phrase and :theme (and assigns them to an instance variable!)" do
+      hash = instance_double("Hash")
+      expect(hash).to receive(:[]).with(:phrase)
+      expect(hash).to receive(:[]).with(:theme)
+      WheelOfFortune.new(hash)
+    end
+  end
+
+  describe "#theme" do
+    it "displays the theme" do
+      expect(@game.theme).to eq theme
+    end
+    it "ensures the theme is read-only" do
+      expect{ @game.theme = "overwrite it" }.to raise_error(NoMethodError)
     end
   end
 
@@ -27,12 +42,6 @@ RSpec.describe WheelOfFortune, :type => :model do
       guesses = @game.guesses
       expect(guesses).to be_an Array
       expect(guesses.empty?).to be true
-    end
-  end
-
-  describe "#theme" do
-    it "outputs the theme" do
-      expect(@game.theme).to eq theme
     end
   end
 
@@ -65,6 +74,10 @@ RSpec.describe WheelOfFortune, :type => :model do
     it "displays underscores in place of (unguessed) characters in the phrase" do
       str = @game.to_s
       expect(str).to eq "__ ____" # "Go fish"
+
+      # Just in case we've hard coded "Go fish" somewhere...
+      str = WheelOfFortune.new({theme: "lyrical expression", phrase: "pokerface"}).to_s
+      expect(str).to eq "_________" # "pokerface"
     end
     it "displays correctly guessed letters in their original position(s)" do
       @game.can_i_have?("o")
