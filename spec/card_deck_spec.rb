@@ -61,7 +61,7 @@ RSpec.describe CardDeck, :type => :model do
   end
 
   describe "#shuffle" do
-    it "returns a shuffled array" do
+    it "returns a shuffled array of cards" do
       expect(@card_deck.shuffle).to be_an Array
       shuffled_cards = @card_deck.shuffle.map(&:face)
       expect(shuffled_cards).to match_array sorted_cards
@@ -74,11 +74,10 @@ RSpec.describe CardDeck, :type => :model do
   end
 
   describe "#draw" do
-    it "returns an Array of cards" do
+    it "returns an array of cards" do
       expect(@card_deck.draw).to be_an Array
-      expect(@card_deck.draw.first).to be_instance_of PlayingCard
     end
-    it "by default it returns one card, the last card in @cards" do
+    it "by default it returns an array of one card, the last card in @cards" do
       last_card = @card_deck.cards.last
       expect(@card_deck.draw).to contain_exactly(last_card)
     end
@@ -110,8 +109,25 @@ RSpec.describe CardDeck, :type => :model do
         expect( @card_deck.draw(1).count ).to eq 0
       end
     end
+  end
 
-
+  describe "#draw_one" do
+    context "given remaining cards" do
+      it "returns a single playing card" do
+        expect(@card_deck.draw_one).to be_instance_of PlayingCard
+      end
+      it "permanently removes the drawn card from @cards" do
+        last_card = @card_deck.cards.last
+        expect { @card_deck.draw_one }.to change{ @card_deck.cards.count }.by(-1)
+        expect(@card_deck.cards).not_to include(last_card)
+      end
+    end
+    context "given no remaining cards" do
+      it "returns nil" do
+        @card_deck.draw(deck_size)
+        expect(@card_deck.draw_one).to eq nil
+      end
+    end
   end
 
 end

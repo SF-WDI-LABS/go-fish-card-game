@@ -18,7 +18,7 @@ class CardDeck
   def draw(n=1)
     drawn_cards = @cards.pop(n)
     qty_drawn = drawn_cards.count
-    return drawn_cards if (qty_drawn == n || discards.length.zero?)
+    return drawn_cards if (qty_drawn == n || @discards.length.zero?)
     shuffle_in_discards
     drawn_cards + draw( n - qty_drawn )
   end
@@ -28,7 +28,7 @@ class CardDeck
   end
 
   def to_s
-    p @cards.map {|card| card.face }
+    @cards.map {|card| card.face }
   end
 
   def push(card)
