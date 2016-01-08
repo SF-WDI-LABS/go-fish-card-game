@@ -48,8 +48,8 @@ RSpec.describe CardDeck, :type => :model do
     end
     it "populates @cards with 52 instances of class PlayingCard (no jokers)" do
       expect(@card_deck.cards.count).to eq 52
-      expect(@card_deck.cards.first.class.to_s).to eq "PlayingCard"
-      # expect(@card_deck.cards.first).to be_instance_of PlayingCard  ## Will this be in scope?
+      # expect(@card_deck.cards.first.class.to_s).to eq "PlayingCard"
+      expect(@card_deck.cards.first).to be_instance_of PlayingCard  ## Will this be in scope?
     end
     it "returns a complete deck" do
       expect(@card_deck.cards.map(&:face)).to match_array sorted_cards
@@ -66,10 +66,43 @@ RSpec.describe CardDeck, :type => :model do
       expect(shuffled_cards).to match_array sorted_cards
       expect(shuffled_cards).not_to eq sorted_cards
     end
-    it "updates the order of cards in @cards" do
+    it "permanently updates the order of cards in @cards" do
       shuffled_cards = @card_deck.shuffle.map(&:face)
       expect(@card_deck.cards.map(&:face)).to match_array shuffled_cards
     end
+  end
+
+  describe "#draw" do
+    it "returns an Array of cards" do
+      expect(@card_deck.draw).to be_an Array
+      expect(@card_deck.draw.first).to be_instance_of PlayingCard
+    end
+    it "by default it returns one card, the last card in @cards" do
+      last_card = @card_deck.cards.last
+      expect(@card_deck.draw).to contain_exactly(last_card)
+    end
+    it "permanently removes the drawn card from @cards" do
+      last_card = @card_deck.cards.last
+      expect { @card_deck.draw }.to change{ @card_deck.cards.count }.by(-1)
+      expect(@card_deck.cards).not_to include(last_card)
+    end
+
+    context "given an (optional) integer as an argument, specifying the number of cards to draw" do
+      it "does not throw an ArgumentError" do
+        expect{ @card_deck.draw(1) }.not_to raise_error
+      end
+      it "returns the requested number of cards" do
+        expect( @card_deck.draw(2).count ).to eq 2
+      end
+      it "permanently removes the drawn cards from @cards" do
+        n = 5
+        last_cards = @card_deck.cards.last(n)
+        expect { @card_deck.draw(n) }.to change{ @card_deck.cards.count }.by(-n)
+        expect(@card_deck.cards).not_to include(last_cards)
+      end
+    end
+
+
   end
 
 end
