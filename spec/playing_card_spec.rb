@@ -34,7 +34,7 @@ RSpec.describe PlayingCard, :type => :model do
 
   describe "#initialize" do
     it "accepts a single argument in the form of a hash" do
-      expect { @card }.not_to raise_error #lazy eval initalizes card here
+      expect { @card }.not_to raise_error
     end
     it "accesses the hash for keys :rank and :suit (and assigns them to an instance variable!)" do
       hash = instance_double("hash")
