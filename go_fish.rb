@@ -56,7 +56,7 @@ class CardDeck
     decks.times do |i|
       ranks.each do |rank|
         suits.each do |suit|
-            self.push( PlayingCard.new(rank, suit) )
+            self.push( PlayingCard.new(rank: rank, suit: suit) )
         end
       end
     end

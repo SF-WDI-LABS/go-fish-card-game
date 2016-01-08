@@ -12,7 +12,7 @@ RSpec.describe CardDeck, :type => :model do
 
   # let(:ranks) { ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] }
   # let(:suits) { ["C", "D", "H", "S"] }
-  let(:sorted_deck) { ["AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS", "KC", "KD", "KH", "KS"] }
+  let(:sorted_cards) { ["AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS", "KC", "KD", "KH", "KS"] }
   # let(:face_regex) { /(10|[1-9]|[AJQK])([CDHS])/ }
 
   # def random_suit
@@ -48,13 +48,27 @@ RSpec.describe CardDeck, :type => :model do
     end
     it "populates @cards with 52 instances of class PlayingCard (no jokers)" do
       expect(@card_deck.cards.count).to eq 52
-      expect(@card_deck.cards.first).to be_instance_of PlayingCard
+      expect(@card_deck.cards.first.class.to_s).to eq "PlayingCard"
+      # expect(@card_deck.cards.first).to be_instance_of PlayingCard  ## Will this be in scope?
     end
     it "returns a complete deck" do
-      expect(@card_deck.cards.map(&:face)).to match_array sorted_deck
+      expect(@card_deck.cards.map(&:face)).to match_array sorted_cards
     end
     it "returns a sorted deck (grouped by suit, with rank ascending)" do
-      expect(@card_deck.cards.map(&:face)).to eq sorted_deck
+      expect(@card_deck.cards.map(&:face)).to eq sorted_cards
+    end
+  end
+
+  describe "#shuffle" do
+    it "returns a shuffled array" do
+      expect(@card_deck.shuffle).to be_an Array
+      shuffled_cards = @card_deck.shuffle.map(&:face)
+      expect(shuffled_cards).to match_array sorted_cards
+      expect(shuffled_cards).not_to eq sorted_cards
+    end
+    it "updates the order of cards in @cards" do
+      shuffled_cards = @card_deck.shuffle.map(&:face)
+      expect(@card_deck.cards.map(&:face)).to match_array shuffled_cards
     end
   end
 
