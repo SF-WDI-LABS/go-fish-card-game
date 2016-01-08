@@ -13,6 +13,7 @@ RSpec.describe CardDeck, :type => :model do
   # let(:ranks) { ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] }
   # let(:suits) { ["C", "D", "H", "S"] }
   let(:sorted_cards) { ["AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS", "KC", "KD", "KH", "KS"] }
+  let(:deck_size) { sorted_cards.count }
   # let(:face_regex) { /(10|[1-9]|[AJQK])([CDHS])/ }
 
   # def random_suit
@@ -47,7 +48,7 @@ RSpec.describe CardDeck, :type => :model do
       expect{ @card_deck.cards = "overwrite it" }.to raise_error(NoMethodError)
     end
     it "populates @cards with 52 instances of class PlayingCard (no jokers)" do
-      expect(@card_deck.cards.count).to eq 52
+      expect(@card_deck.cards.count).to eq 52 # deck_size
       # expect(@card_deck.cards.first.class.to_s).to eq "PlayingCard"
       expect(@card_deck.cards.first).to be_instance_of PlayingCard  ## Will this be in scope?
     end
@@ -92,13 +93,21 @@ RSpec.describe CardDeck, :type => :model do
         expect{ @card_deck.draw(1) }.not_to raise_error
       end
       it "returns the requested number of cards" do
-        expect( @card_deck.draw(2).count ).to eq 2
+        n = rand(deck_size)+1
+        expect( @card_deck.draw(n).count ).to eq n
       end
       it "permanently removes the drawn cards from @cards" do
-        n = 5
+        n = rand(deck_size)+1
         last_cards = @card_deck.cards.last(n)
         expect { @card_deck.draw(n) }.to change{ @card_deck.cards.count }.by(-n)
         expect(@card_deck.cards).not_to include(last_cards)
+      end
+    end
+
+    context "given an integer larger than the number of avilable cards in @cards" do
+      it "returns as many cards as it can" do
+        expect( @card_deck.draw(100).count ).to eq deck_size
+        expect( @card_deck.draw(1).count ).to eq 0
       end
     end
 
