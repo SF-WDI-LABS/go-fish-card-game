@@ -16,19 +16,20 @@ RSpec.describe PlayingCard, :type => :model do
   let(:face_regex) { /(10|[1-9]|[AJQK])([CDHS])/ }
 
   def random_suit
-    suits.sample
+    @suit = suits.sample
   end
 
   def random_rank
-    ranks.sample
+    @rank = ranks.sample
   end
 
   def random_new_card(rank=random_rank, suit=random_suit)
-    PlayingCard.new(rank: rank, suit: suit)
+    @face = rank + suit
+    @card = PlayingCard.new(rank: rank, suit: suit)
   end
 
   before(:each) do
-    @card = random_new_card
+    random_new_card
   end
 
   describe "#initialize" do
@@ -42,6 +43,40 @@ RSpec.describe PlayingCard, :type => :model do
       PlayingCard.new(hash)
     end
   end
+
+  describe "#rank" do
+    it "displays the rank (string)" do
+      expect(@card.rank).to eq @rank
+    end
+    it "ensures the rank is read-only" do
+      expect{ @card.rank = "overwrite it" }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe "#suit" do
+    it "returns the suit (string)" do
+      expect(@card.suit).to eq @suit
+    end
+    it "ensures the suit is read-only" do
+      expect{ @card.suit = "overwrite it" }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe "#face" do
+    it "returns the face value (string) as a combination of rank and suit" do
+      expect(@card.face).to eq @face
+    end
+    it "ensures the face is read-only" do
+      expect{ @card.face = "overwrite it" }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe "#to_s" do
+    it "returns the face value of the card (string)" do
+      expect(@card.to_s).to eq @face
+    end
+  end
+
 end
 
   # let(:theme) { "card cards" }
@@ -51,7 +86,7 @@ end
   # end
 
   # describe "#theme" do
-  #   it "displays the theme" do
+  #   it "returns the theme" do
   #     expect(@card.theme).to eq theme
   #   end
   #   it "ensures the theme is read-only" do
