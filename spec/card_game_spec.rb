@@ -8,6 +8,12 @@ require "./go_fish.rb"              # use this line to test your code
 #### Card Game ####
 #################
 
+require './spec/helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
+
 RSpec.describe CardGame, :type => :model do
 
 end
