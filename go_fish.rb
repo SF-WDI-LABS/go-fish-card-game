@@ -79,11 +79,13 @@ class PlayingCard
   end
 end
 
-# class CardHand
-#   def initialize
-#     @cards = []
-#   end
-# end
+class HandOfCards
+  include Drawable
+
+  def post_initialize(starting_cards=[])
+    @cards += starting_cards
+  end
+end
 
 
 # Driver Code

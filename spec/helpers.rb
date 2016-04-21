@@ -55,7 +55,22 @@ end
 
 #
 
+module HandOfCardsHelper
+  def random_new_hand(size=5)
+    @hand_size = size || rand(5)+1
+    @hand = HandOfCards.new([random_new_card, random_new_card, random_new_card, random_new_card, random_new_card])
+  end
+
+  def new_hand(starting_cards=[])
+    @starting_cards = starting_cards
+    @hand = HandOfCards.new(starting_cards)
+  end
+end
+
+#
+
 module Helpers
   include PlayingCardHelper
   include CardDeckHelper
+  include HandOfCardsHelper
 end
