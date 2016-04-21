@@ -1,5 +1,7 @@
-# class GoFish
-# end
+class CardGame
+end
+
+
 
 class CardDeck
   attr_reader :cards
@@ -79,7 +81,7 @@ end
 
 # Driver Code
 if __FILE__ == $0
-  # g = GoFish.new(players: 2)
+  # g = CardGame.new(players: 2)
   # p g.players
 
   deck = CardDeck.new
