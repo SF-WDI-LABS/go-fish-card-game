@@ -8,25 +8,13 @@ require "./go_fish.rb"              # use this line to test your code
 #### Card Deck ####
 ###################
 
+require './spec/helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
+
 RSpec.describe CardDeck, :type => :model do
-
-  # let(:ranks) { ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] }
-  # let(:suits) { ["C", "D", "H", "S"] }
-  let(:sorted_cards) { ["AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S", "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS", "KC", "KD", "KH", "KS"] }
-  let(:deck_size) { sorted_cards.count }
-  # let(:face_regex) { /(10|[1-9]|[AJQK])([CDHS])/ }
-
-  # def random_suit
-  #   @suit = suits.sample
-  # end
-
-  # def random_rank
-  #   @rank = ranks.sample
-  # end
-
-  def new_deck(shuffled=false)
-    @card_deck = CardDeck.new(shuffled)
-  end
 
   before(:each) do
     new_deck

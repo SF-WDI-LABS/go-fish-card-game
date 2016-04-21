@@ -1,17 +1,17 @@
-# class CardGame
-# end
+class CardGame
+end
 
-class CardDeck
+module Drawable
   attr_reader :cards
 
-  def initialize(shuffled=true)
+  def initialize(*args)
     @cards = []
-    generate_cards
-    shuffle if shuffled
+    post_initialize(*args)
   end
 
-  def shuffle
-    @cards.shuffle!
+  # overridden by class
+  def post_initialize(*args)
+    nil
   end
 
   def draw(n=1)
@@ -22,17 +22,26 @@ class CardDeck
     draw.first
   end
 
-  def to_s
-    @cards.map {|card| card.face }
-  end
-
   def push(card)
     card.deck = self
     @cards << card
   end
+end
 
-  def discard(card)
-    @discards << card
+class CardDeck
+  include Drawable
+
+  def post_initialize(shuffled=true)
+    generate_cards
+    shuffle if shuffled
+  end
+
+  def to_s
+    @cards.map {|card| card.face }
+  end
+
+  def shuffle
+    @cards.shuffle!
   end
 
   private
@@ -70,11 +79,27 @@ class PlayingCard
   end
 end
 
-# class CardHand
-#   def initialize
-#     @cards = []
-#   end
-# end
+class HandOfCards
+  include Drawable
+
+  def post_initialize(starting_cards=[])
+    @cards += starting_cards
+  end
+
+  def any?(rank: nil, suit: nil)
+    return false if rank.nil? and suit.nil?
+    return @cards.any? {|c| c.rank == rank && c.suit == suit } if rank and suit
+    return @cards.any? {|c| c.rank == rank } if rank
+    @cards.any? {|c| c.suit == suit }
+  end
+
+  def take!(rank: nil, suit: nil)
+    return [] if rank.nil? and suit.nil?
+    return @cards.select! {|c| c.rank == rank && c.suit == suit } if rank and suit
+    return @cards.select! {|c| c.rank == rank } if rank
+    @cards.select! {|c| c.suit == suit }
+  end
+end
 
 
 # Driver Code
