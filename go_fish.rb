@@ -6,7 +6,6 @@ class CardDeck
 
   def initialize(shuffled=true)
     @cards = []
-    @discards = []
     generate_cards
     shuffle if shuffled
   end
@@ -16,11 +15,7 @@ class CardDeck
   end
 
   def draw(n=1)
-    drawn_cards = @cards.pop(n)
-    qty_drawn = drawn_cards.count
-    return drawn_cards if (qty_drawn == n || @discards.length.zero?)
-    shuffle_in_discards
-    drawn_cards + draw( n - qty_drawn )
+    @cards.pop(n).reverse
   end
 
   def draw_one
@@ -41,11 +36,6 @@ class CardDeck
   end
 
   private
-
-  def shuffle_in_discards
-    @cards += @discards.shuffle
-    @discards.clear
-  end
 
   def generate_cards(decks=1)
     ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
