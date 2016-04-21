@@ -85,6 +85,13 @@ class HandOfCards
   def post_initialize(starting_cards=[])
     @cards += starting_cards
   end
+
+  def any?(rank: nil, suit: nil)
+    return false if rank.nil? and suit.nil?
+    return @cards.any? {|c| c.rank == rank && c.suit == suit } if rank and suit
+    return @cards.any? {|c| c.rank == rank } if rank
+    @cards.any? {|c| c.suit == suit }
+  end
 end
 
 

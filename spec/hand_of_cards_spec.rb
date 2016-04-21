@@ -108,4 +108,25 @@ RSpec.describe HandOfCards, :type => :model do
     end
   end
 
+  describe "#any?" do
+    context "given a rank (string) to search for" do
+      it "returns a boolean indicating whether any card with that rank is present" do
+        card = @hand.cards.sample
+        expect( @hand.any?(rank: card.rank) ).to be true
+
+        missing_rank = ["X", "Y", "Z"].sample
+        expect( @hand.any?(rank: missing_rank) ).to be false
+      end
+    end
+    context "given a suit (string) to search for" do
+      it "returns a boolean indicating whether any card with that suit is present" do
+        card = @hand.cards.sample
+        expect( @hand.any?(suit: card.suit) ).to be true
+
+        missing_suit = ["X", "Y", "Z"].sample
+        expect( @hand.any?(suit: missing_suit) ).to be false
+      end
+    end
+  end
+
 end
