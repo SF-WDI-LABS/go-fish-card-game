@@ -101,6 +101,10 @@ class HandOfCards
   end
 end
 
+class CardPlayer
+
+end
+
 
 # Driver Code
 if __FILE__ == $0
