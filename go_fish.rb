@@ -1,21 +1,7 @@
 class CardGame
 end
 
-
-
-class CardDeck
-  attr_reader :cards
-
-  def initialize(shuffled=true)
-    @cards = []
-    generate_cards
-    shuffle if shuffled
-  end
-
-  def shuffle
-    @cards.shuffle!
-  end
-
+module Drawable
   def draw(n=1)
     @cards.pop(n).reverse
   end
@@ -24,17 +10,28 @@ class CardDeck
     draw.first
   end
 
-  def to_s
-    @cards.map {|card| card.face }
-  end
-
   def push(card)
     card.deck = self
     @cards << card
   end
+end
 
-  def discard(card)
-    @discards << card
+class CardDeck
+  attr_reader :cards
+  include Drawable
+
+  def initialize(shuffled=true)
+    @cards = []
+    generate_cards
+    shuffle if shuffled
+  end
+
+  def to_s
+    @cards.map {|card| card.face }
+  end
+
+  def shuffle
+    @cards.shuffle!
   end
 
   private
