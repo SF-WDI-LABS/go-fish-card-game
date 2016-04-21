@@ -56,7 +56,9 @@ end
 #
 
 module CardPlayerHelper
-
+  # def new_card_player(args)
+  #   @card_deck = CardDeck.new(args)
+  # end
 end
 
 #

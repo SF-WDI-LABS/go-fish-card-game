@@ -103,6 +103,12 @@ end
 
 class CardPlayer
 
+  attr_reader :hand
+
+  def initialize(args)
+    @hand = args[:hand]
+  end
+
 end
 
 
