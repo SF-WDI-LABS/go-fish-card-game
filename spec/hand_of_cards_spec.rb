@@ -129,4 +129,37 @@ RSpec.describe HandOfCards, :type => :model do
     end
   end
 
+  describe "#take!" do
+    context "given a rank (string) to search for" do
+      it "returns an array of all available cards with that rank" do
+        card = @hand.cards.sample
+        selection = @hand.take!(rank: card.rank)
+        expect( selection ).to include(card)
+
+        missing_rank = ["X", "Y", "Z"].sample
+        expect( @hand.take!(rank: missing_rank) ).to be_empty
+      end
+      it "permanently removes the selected cards from the hand (destructive)" do
+        card = @hand.cards.sample
+        selection = @hand.take!(rank: card.rank)
+        expect( @hand.cards ).to_not include(selection)
+      end
+    end
+    context "given a suit (string) to search for" do
+      it "returns an array of all available cards with that suit" do
+        card = @hand.cards.sample
+        selection = @hand.take!(suit: card.suit)
+        expect( selection ).to include(card)
+
+        missing_suit = ["X", "Y", "Z"].sample
+        expect( @hand.take!(suit: missing_suit) ).to be_empty
+      end
+      it "permanently removes the selected cards from the hand (destructive)" do
+        card = @hand.cards.sample
+        selection = @hand.take!(suit: card.suit)
+        expect( @hand.cards ).to_not include(selection)
+      end
+    end
+  end
+
 end

@@ -92,6 +92,13 @@ class HandOfCards
     return @cards.any? {|c| c.rank == rank } if rank
     @cards.any? {|c| c.suit == suit }
   end
+
+  def take!(rank: nil, suit: nil)
+    return [] if rank.nil? and suit.nil?
+    return @cards.select! {|c| c.rank == rank && c.suit == suit } if rank and suit
+    return @cards.select! {|c| c.rank == rank } if rank
+    @cards.select! {|c| c.suit == suit }
+  end
 end
 
 
