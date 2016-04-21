@@ -2,6 +2,18 @@ class CardGame
 end
 
 module Drawable
+  attr_reader :cards
+
+  def initialize(*args)
+    @cards = []
+    post_initialize(*args)
+  end
+
+  # overridden by class
+  def post_initialize(*args)
+    nil
+  end
+
   def draw(n=1)
     @cards.pop(n).reverse
   end
@@ -17,11 +29,9 @@ module Drawable
 end
 
 class CardDeck
-  attr_reader :cards
   include Drawable
 
-  def initialize(shuffled=true)
-    @cards = []
+  def post_initialize(shuffled=true)
     generate_cards
     shuffle if shuffled
   end
