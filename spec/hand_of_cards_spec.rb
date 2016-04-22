@@ -103,8 +103,10 @@ RSpec.describe HandOfCards, :type => :model do
   end
 
   describe "#push" do
-    it "accepts a single playing card as an argument" do
+    it "accepts any number of playing cards as arguments" do
       expect{ @hand.push(random_new_card) }.not_to raise_error(ArgumentError)
+      expect{ @hand.push(random_new_card, random_new_card) }.not_to raise_error(ArgumentError)
+      expect{ @hand.push(random_new_card, random_new_card, random_new_hand) }.not_to raise_error(ArgumentError)
     end
   end
 

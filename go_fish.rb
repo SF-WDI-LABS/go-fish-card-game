@@ -22,9 +22,8 @@ module Drawable
     draw.first
   end
 
-  def push(card)
-    card.deck = self
-    @cards << card
+  def push(*cards)
+    @cards.push(*cards)
   end
 end
 
