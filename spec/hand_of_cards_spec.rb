@@ -150,7 +150,7 @@ RSpec.describe HandOfCards, :type => :model do
       it "permanently removes the selected cards from the hand (destructive)" do
         card = @hand.cards.sample
         selection = @hand.take!(rank: card.rank)
-        expect( @hand.cards ).to_not include(selection)
+        expect( @hand.cards ).to_not include(*selection)
       end
     end
     context "given a suit (string) to search for" do
@@ -165,7 +165,7 @@ RSpec.describe HandOfCards, :type => :model do
       it "permanently removes the selected cards from the hand (destructive)" do
         card = @hand.cards.sample
         selection = @hand.take!(suit: card.suit)
-        expect( @hand.cards ).to_not include(selection)
+        expect( @hand.cards ).to_not include(*selection)
       end
     end
   end

@@ -97,10 +97,23 @@ class HandOfCards
   end
 
   def take!(rank: nil, suit: nil)
-    return [] if rank.nil? and suit.nil?
-    return @cards.select! {|c| c.rank == rank && c.suit == suit } if rank and suit
-    return @cards.select! {|c| c.rank == rank } if rank
-    @cards.select! {|c| c.suit == suit }
+    taken = []
+
+    if rank and suit
+      @cards.delete_if do |c|
+        taken.push(c) if c.rank == rank && c.suit == suit
+      end
+    elsif rank
+      @cards.delete_if do |c|
+        taken.push(c) if c.rank == rank
+      end
+    else
+      @cards.delete_if do |c|
+        taken.push(c) if c.suit == suit
+      end
+    end
+
+    taken
   end
 end
 
