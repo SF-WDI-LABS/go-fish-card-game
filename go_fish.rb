@@ -86,6 +86,10 @@ class HandOfCards
     @cards += starting_cards
   end
 
+  def to_s
+    @cards.join(" ")
+  end
+
   def any?(rank: nil, suit: nil)
     return false if rank.nil? and suit.nil?
     return @cards.any? {|c| c.rank == rank && c.suit == suit } if rank and suit

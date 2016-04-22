@@ -108,6 +108,12 @@ RSpec.describe HandOfCards, :type => :model do
     end
   end
 
+  describe "#to_s" do
+    it "returns all the card faces in the hand as a single string" do
+      expect( @hand.to_s ).to eq @hand.cards.map(&:face).join(" ")
+    end
+  end
+
   describe "#any?" do
     context "given a rank (string) to search for" do
       it "returns a boolean indicating whether any card with that rank is present" do
