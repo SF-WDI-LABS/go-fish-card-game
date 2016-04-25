@@ -119,7 +119,7 @@ RSpec.describe CardDeck, :type => :model do
   end
 
   describe "#push" do
-    it "accepts a single playing card as an argument" do
+    it "accepts any number of playing card as arguments" do
       card = instance_double("PlayingCard", rank: "A", suit: "H")
       expect{ @card_deck.push(card) }.not_to raise_error(ArgumentError)
       expect{ @card_deck.push(card, card, card, card) }.not_to raise_error(ArgumentError)
