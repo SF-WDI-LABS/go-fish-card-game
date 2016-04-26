@@ -19,14 +19,66 @@ Next, check that the rspec tests are working (they should be failing!):
 ```bash
 rspec
 # or
-rspec spec/wheel_of_fortune_spec.rb
+rspec spec/1_playing_card_spec.rb
+# or, run only test that match your search
+rspec spec/2_card_deck_spec.rb -e "shuffle"
 ```
 
 ## Building the Game
-Take a look inside `go_fish.rb` and you'll see some boilerplate code for our classes.
- 
-Follow the tests to get started!
 
+Take a look inside `go_fish.rb` and you'll see some boilerplate code for our classes.
+
+#### Class Interfaces
+
+Your classes will have the following interfaces:
+
+| `PlayingCard` | `CardDeck`    | `HandOfCards` | `CardPlayer`  |
+| :----         | :----         | :----         | :----         |
+| `initialize`  | `initialize`  | `initialize`  | `initialize`  |
+| `rank`        | `cards`       | `cards`       | `hand`        |
+| `suit`        | `to_s`        | `to_s`        |               |
+| `face`        | `shuffle`     | `shuffle`     |               |
+| `to_s`        | `draw`        | `draw`        |               |
+|               | `draw_one`    | `draw_one`    |               |
+|               | `push`        | `push`        |               |
+|               |               | `any?`        |               |
+|               |               | `take!`       |               |
+
+This will allow us to run "Driver Code" along the lines of:
+
+```
+# GAME SETUP
+
+deck = CardDeck.new
+deck.shuffle
+
+card = deck.draw_one
+two_cards = deck.draw(2)
+
+cards1 = deck.draw(5)
+h1 = HandOfCards.new(cards1)
+p1 = CardPlayer.new(hand: h1)
+
+cards2 = deck.draw(5)
+h2 = HandOfCards.new(cards2)
+p2 = CardPlayer.new(hand: h2 )
+
+
+# GAME PLAY
+
+wanted_rank = "3"
+puts "p1, do you have any... #{wanted_rank}'s?"
+if p1.hand.any?(rank: wanted_rank)
+    cards = p1.hand.take!(rank: wanted_rank)
+    p2.hand.push(*cards)
+else
+    puts "Go Fish"
+    p2.hand.push(deck.draw)
+end
+
+```
+
+#### Playing Cards
 Your first goal will be to build your `PlayingCard` objects. Here's some raw data (no jokers!):
 
 ```ruby
@@ -40,6 +92,8 @@ SORTED_CARDS = [
     "KC", "KD", "KH", "KS"
 ]
 ```
+
+**Follow the tests to get started!**
 
 ## Tips
 You can run your game from the command line by typing:

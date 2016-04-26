@@ -62,7 +62,6 @@ end
 
 class PlayingCard
   attr_reader :rank, :suit, :face
-  attr_accessor :deck
 
   def initialize(args)
     @rank = args[:rank]
@@ -138,7 +137,7 @@ if __FILE__ == $0
   puts "hand2: #{h2}"
 
   p1 = CardPlayer.new(hand: h1)
-  p2 = CardPlayer.new(hand: HandOfCards.new(deck.draw(5)) )
+  p2 = CardPlayer.new(hand: h2 )
 
   puts "Hands: [ #{p1.hand} ], [ #{p2.hand} ] (before)"
 
