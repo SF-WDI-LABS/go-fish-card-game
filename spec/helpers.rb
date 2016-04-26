@@ -43,6 +43,11 @@ module PlayingCardHelper
     @card = PlayingCard.new(rank: rank, suit: suit)
   end
 
+  def random_stubbed_card(rank=random_rank, suit=random_suit)
+    @face = rank + suit
+    @card = instance_double("PlayingCard", rank: rank, suit: suit)
+  end
+
 end
 
 #
