@@ -60,7 +60,7 @@ RSpec.describe CardDeck, :type => :model do
       end
       it "permanently updates the order of cards in @cards" do
         shuffled_cards = @card_deck.shuffle.map(&:face)
-        expect(@card_deck.cards.map(&:face)).to match_array shuffled_cards
+        expect(@card_deck.cards.map(&:face)).to eq shuffled_cards
       end
     end
 
@@ -126,6 +126,16 @@ RSpec.describe CardDeck, :type => :model do
         card = random_stubbed_card
         expect{ @card_deck.push(card) }.not_to raise_error(ArgumentError)
         expect{ @card_deck.push(card, card, card, card) }.not_to raise_error(ArgumentError)
+      end
+      it "adds the card to the deck (one)" do
+        card = random_stubbed_card
+        expect{ @card_deck.push(card) }.to change{ @card_deck.cards.count }.by(1)
+        expect(@card_deck.cards).to include(card)
+      end
+      it "adds the cards to the deck (many)" do
+        four_cards = [random_stubbed_card, random_stubbed_card, random_stubbed_card, random_stubbed_card]
+        expect{ @card_deck.push(*four_cards) }.to  change{ @card_deck.cards.count }.by(4)
+        expect(@card_deck.cards).to include(*four_cards)
       end
     end
   end
