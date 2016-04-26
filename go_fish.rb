@@ -1,17 +1,17 @@
 class PlayingCard
-  #
+  # initialize
 end
 
 class CardDeck
-  #
+  # initialize
 end
 
 class HandOfCards
-  #
+  # initialize
 end
 
 class CardPlayer
-  #
+  # initialize
 end
 
 
