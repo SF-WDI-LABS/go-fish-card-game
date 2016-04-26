@@ -127,6 +127,16 @@ RSpec.describe CardDeck, :type => :model do
         expect{ @card_deck.push(card) }.not_to raise_error(ArgumentError)
         expect{ @card_deck.push(card, card, card, card) }.not_to raise_error(ArgumentError)
       end
+      it "adds the card to the deck (one)" do
+        card = random_stubbed_card
+        expect{ @card_deck.push(card) }.to change{ @card_deck.cards.count }.by(1)
+        expect(@card_deck.cards).to include(card)
+      end
+      it "adds the cards to the deck (many)" do
+        four_cards = [random_stubbed_card, random_stubbed_card, random_stubbed_card, random_stubbed_card]
+        expect{ @card_deck.push(*four_cards) }.to  change{ @card_deck.cards.count }.by(4)
+        expect(@card_deck.cards).to include(*four_cards)
+      end
     end
   end
 
