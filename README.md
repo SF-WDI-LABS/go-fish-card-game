@@ -106,7 +106,7 @@ ruby go_fish.rb
 You can also load your code into Pry to test your assumptions:
 ```bash
 pry
-> require 'go_fish.rb'
+> load 'go_fish.rb'
 > card = Card.new({...})
 > card.face # "AC"
 ```
