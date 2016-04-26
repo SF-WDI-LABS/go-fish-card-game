@@ -115,7 +115,9 @@ RSpec.describe CardDeck, :type => :model do
       end
       context "given no remaining cards" do
         it "returns nil" do
-          @card_deck.draw(deck_size)
+          deck_size.times do
+            @card_deck.draw_one
+          end
           expect(@card_deck.draw_one).to eq nil
         end
       end
