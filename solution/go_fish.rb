@@ -86,28 +86,19 @@ class HandOfCards
     @cards.join(" ")
   end
 
-  def any?(rank: nil, suit: nil)
-    return false if rank.nil? and suit.nil?
-    return @cards.any? {|c| c.rank == rank && c.suit == suit } if rank and suit
-    return @cards.any? {|c| c.rank == rank } if rank
-    @cards.any? {|c| c.suit == suit }
+  def any?(rank: "", suit: "")
+    face = (rank + suit).upcase
+    return false if face.empty?
+    @cards.any? {|c| c.face.match(face) }
   end
 
-  def take!(rank: nil, suit: nil)
+  def take!(rank: "", suit: "")
     taken = []
+    face = (rank + suit).upcase
+    return taken if face.empty?
 
-    if rank and suit
-      @cards.delete_if do |c|
-        taken.push(c) if c.rank == rank && c.suit == suit
-      end
-    elsif rank
-      @cards.delete_if do |c|
-        taken.push(c) if c.rank == rank
-      end
-    else
-      @cards.delete_if do |c|
-        taken.push(c) if c.suit == suit
-      end
+    @cards.delete_if do |c|
+      taken.push(c) if c.face.match(face)
     end
 
     taken
