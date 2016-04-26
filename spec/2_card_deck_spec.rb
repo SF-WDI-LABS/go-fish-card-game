@@ -60,7 +60,7 @@ RSpec.describe CardDeck, :type => :model do
       end
       it "permanently updates the order of cards in @cards" do
         shuffled_cards = @card_deck.shuffle.map(&:face)
-        expect(@card_deck.cards.map(&:face)).to match_array shuffled_cards
+        expect(@card_deck.cards.map(&:face)).to eq shuffled_cards
       end
     end
 
