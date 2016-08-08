@@ -60,7 +60,7 @@ RSpec.describe CardDeck, :type => :model do
       end
       it "permanently updates the order of cards in @cards" do
         shuffled_cards = @card_deck.shuffle.map(&:face)
-        expect(@card_deck.cards.map(&:face)).to match_array shuffled_cards
+        expect(@card_deck.cards.map(&:face)).to eq shuffled_cards
       end
     end
 
@@ -115,7 +115,9 @@ RSpec.describe CardDeck, :type => :model do
       end
       context "given no remaining cards" do
         it "returns nil" do
-          @card_deck.draw(deck_size)
+          deck_size.times do
+            @card_deck.draw_one
+          end
           expect(@card_deck.draw_one).to eq nil
         end
       end

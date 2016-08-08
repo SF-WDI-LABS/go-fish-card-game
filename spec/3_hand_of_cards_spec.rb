@@ -99,7 +99,9 @@ RSpec.describe HandOfCards, :type => :model do
       end
       context "given no remaining cards" do
         it "returns nil" do
-          @hand.draw(@hand_size)
+          @hand_size.times do
+            @hand.draw_one
+          end
           expect(@hand.draw_one).to eq nil
         end
       end
