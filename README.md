@@ -30,7 +30,7 @@ Take a look inside `go_fish.rb` and you'll see some boilerplate code for our cla
 
 #### Class Interfaces
 
-Your classes will have the following interfaces:
+Your classes will have the following interfaces (take the time to study these closely):
 
 | `PlayingCard` | `CardDeck`    | `HandOfCards` | `CardPlayer`  |
 | :----         | :----         | :----         | :----         |
@@ -44,7 +44,7 @@ Your classes will have the following interfaces:
 |               |               | `any?`        |               |
 |               |               | `take!`       |               |
 
-This will allow us to run "Driver Code" along the lines of:
+Together, these classes and methods will allow us to simulate game play, using the following "Driver Code":
 
 ```
 # GAME SETUP
@@ -73,13 +73,14 @@ if p1.hand.any?(rank: wanted_rank)
     p2.hand.push(*cards)
 else
     puts "Go Fish"
-    p2.hand.push(deck.draw)
+    drawn_card = deck.draw
+    p2.hand.push(drawn_card)
 end
 
 ```
 
 #### Playing Cards
-Your first goal will be to build your `PlayingCard` objects. Here's some raw data (no jokers!):
+Your first goal will be to build your `PlayingCard` objects. Here's some raw data for you to copy paste (no jokers!):
 
 ```ruby
 RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -96,7 +97,9 @@ SORTED_CARDS = [
 **Follow the tests to get started!**
 
 ## Tips
-You can run your game from the command line by typing:
+It's easy to get lost in test output / lose sight of the "big picture". Make sure you understand what your goal is before you dive in!
+
+You can run your game's Driver Code from the command line by typing:
 ```bash
 ruby go_fish.rb
 ```
