@@ -24,6 +24,8 @@ class PlayingCard
 end
 
 class CardDeck
+  attr_reader :cards
+
   def initialize(_new = true)
     @cards = []
     populate_cards
@@ -39,8 +41,6 @@ class CardDeck
     ).each { |c| @cards.push(PlayingCard.new(rank: c[0...-1], suit: c[-1])) }
     @cards
   end
-
-  attr_reader :cards
 
   def shuffle
     @cards.shuffle!
@@ -66,11 +66,11 @@ class CardDeck
 end
 
 class HandOfCards
+  attr_reader :cards
+
   def initialize(arr = [])
     @cards = arr
   end
-
-  attr_reader :cards
 
   def draw(n = 1)
     drawn = []
@@ -102,11 +102,11 @@ class HandOfCards
 end
 
 class CardPlayer
+  attr_reader :hand
+
   def initialize(data = {})
     @hand = data[:hand]
   end
-
-  attr_reader :hand
 end
 
 # Driver Code
