@@ -1,5 +1,5 @@
 # THIS FILE PERFORMS RSPEC TESTS ON `go_fish.rb`
-# TO RUN YOUR TESTS TYPE: `rspec spec/go_fish_spec.rb`
+# TO RUN YOUR TESTS TYPE: `rspec spec/2_card_deck_spec.rb`
 
 # require "./solution/go_fish.rb"   # use this line to see passing tests
 require "./go_fish.rb"              # use this line to test your code
@@ -18,10 +18,29 @@ RSpec.describe CardDeck, :type => :model do
 
   context "[instantiation]" do
     describe "#initialize" do
-      it "accepts an optional boolean" do
+      it "accepts an optional boolean indicating whether to shuffle" do
         expect { CardDeck.new }.not_to raise_error
         expect { CardDeck.new(true) }.not_to raise_error
         expect { CardDeck.new(false) }.not_to raise_error
+      end
+
+      it "is shuffled if the argument is true" do
+        deck1 = CardDeck.new(true)
+        deck2 = CardDeck.new(true)
+        expect(deck1.cards.map(&:face)).to match_array deck2.cards.map(&:face)
+        expect(deck1.cards.map(&:face)).not_to eq deck2.cards.map(&:face)
+      end
+
+      it "is not shuffled if the argument is false" do
+        deck1 = CardDeck.new(false)
+        deck2 = CardDeck.new(false)
+        expect(deck1.cards.map(&:face)).to eq deck2.cards.map(&:face)
+      end
+      it "defaults to shuffling if no argument is passed" do
+        deck1 = CardDeck.new
+        deck2 = CardDeck.new
+        expect(deck1.cards.map(&:face)).to match_array deck2.cards.map(&:face)
+        expect(deck1.cards.map(&:face)).not_to eq deck2.cards.map(&:face)
       end
     end
   end
