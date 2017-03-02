@@ -113,6 +113,16 @@ RSpec.describe HandOfCards, :type => :model do
         expect{ @hand.push(random_new_card, random_new_card) }.not_to raise_error(ArgumentError)
         expect{ @hand.push(random_new_card, random_new_card, random_new_hand) }.not_to raise_error(ArgumentError)
       end
+      it "adds the card to the hand (one)" do
+        card = random_new_card
+        expect{ @hand.push(card) }.to change{ @hand.cards.count }.by(1)
+        expect(@hand.cards).to include(card)
+      end
+      it "adds the cards to the hand (many)" do
+        four_cards = [random_new_card, random_new_card, random_new_card, random_new_card]
+        expect{ @hand.push(*four_cards) }.to  change{ @hand.cards.count }.by(4)
+        expect(@hand.cards).to include(*four_cards)
+      end
     end
 
     describe "#to_s" do

@@ -24,19 +24,19 @@ RSpec.describe CardDeck, :type => :model do
         expect { CardDeck.new(false) }.not_to raise_error
       end
 
-      it "is shuffled if the argument is true" do
+      it "results in a deck with shuffled cards if the argument is true" do
         deck1 = CardDeck.new(true)
         deck2 = CardDeck.new(true)
         expect(deck1.cards.map(&:face)).to match_array deck2.cards.map(&:face)
         expect(deck1.cards.map(&:face)).not_to eq deck2.cards.map(&:face)
       end
 
-      it "is not shuffled if the argument is false" do
+      it "results in a deck with not-shuffled cards if the argument is false" do
         deck1 = CardDeck.new(false)
         deck2 = CardDeck.new(false)
         expect(deck1.cards.map(&:face)).to eq deck2.cards.map(&:face)
       end
-      it "defaults to shuffling if no argument is passed" do
+      it "by default results in a deck with shuffled cards if no argument is passed" do
         deck1 = CardDeck.new
         deck2 = CardDeck.new
         expect(deck1.cards.map(&:face)).to match_array deck2.cards.map(&:face)
