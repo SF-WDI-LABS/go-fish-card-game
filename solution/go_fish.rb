@@ -49,8 +49,8 @@ class CardDeck
     @cards.clear
 
     decks.times do |i|
-      ranks.each do |rank|
-        suits.each do |suit|
+      for rank in ranks
+        for suit in suits
             self.push( PlayingCard.new(rank: rank, suit: suit) )
         end
       end
