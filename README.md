@@ -79,7 +79,9 @@ end
 ```
 
 #### Playing Cards
-Your first goal will be to build your `PlayingCard` objects. Here's some raw data for you to copy paste (no jokers!):
+Your first goal will be to build your `PlayingCard` objects. 
+
+When you build your `CardDeck` object, be sure to copy and paste the code below into your `generate_cards` function (no jokers!):
 
 ```ruby
 ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
