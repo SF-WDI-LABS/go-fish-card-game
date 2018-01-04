@@ -32,17 +32,16 @@ Take a look inside `go_fish.rb` and you'll see some boilerplate code for our cla
 
 Your classes will have the following interfaces (take the time to study these closely):
 
-| `PlayingCard` | `CardDeck`    | `HandOfCards` | `CardPlayer`  |
-| :----         | :----         | :----         | :----         |
-| `initialize`  | `initialize`  | `initialize`  | `initialize`  |
-| `rank`        | `cards`       | `cards`       | `hand`        |
-| `suit`        | `to_s`        | `to_s`        |               |
-| `face`        | `shuffle`     | `shuffle`     |               |
-| `to_s`        | `draw`        | `draw`        |               |
-|               | `draw_one`    | `draw_one`    |               |
-|               | `push`        | `push`        |               |
-|               |               | `any?`        |               |
-|               |               | `take!`       |               |
+| `PlayingCard` | `CardDeck`       | `HandOfCards` | `CardPlayer`  |
+| :----         | :----            | :----         | :----         |
+| `initialize`  | `initialize`     | `initialize`  | `initialize`  |
+| `rank`        | `cards`          | `cards`       | `hand`        |
+| `suit`        | `generate_cards` | `to_s`        |               |
+| `face`        | `shuffle`        | `draw`        |               |
+| `to_s`        | `draw`           | `draw_one`    |               |
+|               | `draw_one`       | `push`        |               |
+|               | `push`           | `any?`        |               |
+|               |                  | `take!`       |               |
 
 Together, these classes and methods will allow us to simulate game play, using the following "Driver Code":
 
@@ -83,15 +82,8 @@ end
 Your first goal will be to build your `PlayingCard` objects. Here's some raw data for you to copy paste (no jokers!):
 
 ```ruby
-RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-SUITS = ["C", "D", "H", "S"]
-SORTED_CARDS = [
-    "AC", "AD", "AH", "AS", "2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S",
-    "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S",
-    "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S",
-    "10C", "10D", "10H", "10S", "JC", "JD", "JH", "JS", "QC", "QD", "QH", "QS",
-    "KC", "KD", "KH", "KS"
-]
+ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+suits = ["C", "D", "H", "S"]
 ```
 
 **Follow the tests to get started!**
