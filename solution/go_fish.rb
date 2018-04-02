@@ -42,17 +42,15 @@ class CardDeck
 
   private
 
-  def generate_cards(decks=1)
-    ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-    suits = ["C", "D", "H", "S"]
+  def generate_cards
+    ranks = %w( A 2 3 4 5 6 7 8 9 10 J Q K )
+    suits = %w( C D H S )
 
     @cards.clear
 
-    decks.times do |i|
-      ranks.each do |rank|
-        suits.each do |suit|
-            self.push( PlayingCard.new(rank: rank, suit: suit) )
-        end
+    for rank in ranks
+      for suit in suits
+          self.push( PlayingCard.new(rank: rank, suit: suit) )
       end
     end
   end
